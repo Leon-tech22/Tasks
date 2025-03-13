@@ -1,0 +1,67 @@
+function deepCopy(obj) {
+    // Хранение уже скопированных объектов для обработки циклических ссылок
+    const seen = new WeakMap();
+
+    // Вспомогательная функция для рекурсивного копирования
+    function copy(value) {
+        // Если значение — примитив, возвращаем его
+        if (typeof value !== 'object' || value === null) {
+            return value;
+        }
+
+        // Если значение уже было скопировано, возвращаем его копию
+        if (seen.has(value)) {
+            return seen.get(value);
+        }
+
+        // Обработка массивов
+        if (Array.isArray(value)) {
+            const newArray = [];
+            seen.set(value, newArray); // Сохраняем ссылку на новый массив
+            for (let item of value) {
+                newArray.push(copy(item)); // Рекурсивно копируем элементы
+            }
+            return newArray;
+        }
+
+        // Обработка объектов
+        if (value instanceof Object) {
+            // Создаем новый объект с тем же прототипом
+            const newObj = Object.create(Object.getPrototypeOf(value));
+            seen.set(value, newObj); // Сохраняем ссылку на новый объект
+
+            // Копируем свойства, включая символы
+            const keys = Reflect.ownKeys(value);
+            for (let key of keys) {
+                newObj[key] = copy(value[key]); // Рекурсивно копируем значения
+            }
+            return newObj;
+        }
+
+        // Обработка других типов (Date, Map, Set и т.д.)
+        if (value instanceof Date) {
+            return new Date(value);
+        }
+        if (value instanceof Map) {
+            const newMap = new Map();
+            seen.set(value, newMap);
+            for (let [key, val] of value) {
+                newMap.set(copy(key), copy(val));
+            }
+            return newMap;
+        }
+        if (value instanceof Set) {
+            const newSet = new Set();
+            seen.set(value, newSet);
+            for (let item of value) {
+                newSet.add(copy(item));
+            }
+            return newSet;
+        }
+
+        // Если тип не поддерживается, возвращаем оригинальное значение
+        return value;
+    }
+
+    return copy(obj);
+}
