@@ -1,0 +1,65 @@
+/* Общие стили */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #87CEEB; /* Голубое небо */
+}
+
+/* Контейнер дома */
+.house {
+    position: relative;
+}
+
+/* Основание дома */
+.base {
+    width: 200px;
+    height: 150px;
+    background-color: #8B4513; /* Коричневый */
+    position: relative;
+}
+
+/* Крыша */
+.roof {
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid #A0522D; /* Темно-коричневый */
+    position: absolute;
+    top: -80px;
+    left: 0;
+}
+
+/* Окно */
+.window {
+    width: 50px;
+    height: 50px;
+    background-color: #ADD8E6; /* Голубой */
+    border-radius: 50%; /* Круглая форма */
+    position: absolute;
+    top: 50px;
+    left: 75px;
+}
+
+/* Дымоход */
+.chimney {
+    width: 20px;
+    height: 60px;
+    background-color: #696969; /* Серый */
+    position: absolute;
+    top: -60px;
+    left: 140px;
+}
+
+/* Дверь */
+.door {
+    width: 40px;
+    height: 80px;
+    background-color: #A0522D; /* Темно-коричневый */
+    position: absolute;
+    bottom: 0;
+    left: 80px;
+}
